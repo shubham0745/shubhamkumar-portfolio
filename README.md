@@ -1,130 +1,450 @@
-# Shubham Kumar — Portfolio
+# Shubham Kumar — Personal Portfolio
 
-Personal site built with **Next.js 14 (App Router) · TypeScript · Tailwind CSS · Framer Motion**.
+A modern, responsive personal portfolio showcasing my work across **Software Engineering, Backend Development, AI Training & Evaluation, Technical Benchmarking, and Applied Research**.
 
-Dark navy shell, blue/violet ambient glow, a canvas node field behind the hero, scroll reveals, fully responsive.
+Built with Next.js 14, TypeScript, Tailwind CSS, and Framer Motion, the portfolio focuses on performance, accessibility, clean architecture, and a polished user experience.
+
+**Live Website:** [https://shubhamkumar.site](https://shubhamkumar.site)
 
 ---
 
-## Running it
+## Overview
+
+This portfolio brings together my software engineering experience, independent AI evaluation work, technical projects, and research contributions.
+
+It highlights three primary areas:
+
+- **Backend Engineering & Distributed Systems** — Backend architecture, REST APIs, caching, asynchronous processing, database optimization, and distributed systems.
+- **AI Training & Evaluation** — AI-generated response evaluation, programming assessments, technical benchmarking, reasoning quality, and instruction-following.
+- **Engineering Projects & Applied Research** — Independent software systems, full-stack applications, machine learning, and technical experimentation.
+
+The website is designed to serve as a central professional profile for software engineering opportunities, AI evaluation projects, freelance collaborations, and technical fellowships.
+
+## Technology Stack
+
+| Category | Technologies |
+|---|---|
+| Framework | Next.js 14 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS |
+| Animations | Framer Motion |
+| Icons | Lucide React |
+| Deployment | Vercel |
+| Version Control | Git & GitHub |
+
+## Features
+
+- Responsive layouts for desktop, tablet, and mobile.
+- Dark-themed interface with ambient blue and violet visual accents.
+- Interactive hero section with a canvas-based node visualization.
+- Smooth scroll-reveal animations.
+- Dynamic typing animation for professional roles.
+- Dedicated About, Experience, Projects, and Contact pages.
+- Reusable project and experience components.
+- SEO metadata, canonical URLs, Open Graph, and Twitter metadata.
+- Automatically generated sitemap and robots.txt.
+- JSON-LD structured data.
+- Downloadable resume support, configurable through a centralized content flag.
+- Accessibility improvements, including semantic HTML, image alt attributes, and reduced-motion support.
+- Production security headers.
+
+## Project Structure
+
+```text
+personal-portfolio-website/
+│
+├── public/
+│   ├── projects/
+│   ├── resume.pdf
+│   └── ...
+│
+├── src/
+│   ├── app/
+│   │   ├── about/
+│   │   ├── experience/
+│   │   ├── projects/
+│   │   ├── contact/
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   ├── sitemap.ts
+│   │   ├── robots.ts
+│   │   ├── opengraph-image.tsx
+│   │   ├── not-found.tsx
+│   │   ├── error.tsx
+│   │   ├── icon.svg
+│   │   └── globals.css
+│   │
+│   ├── components/
+│   │   ├── visuals/
+│   │   │   └── HeroField.tsx
+│   │   ├── Hero.tsx
+│   │   ├── Navbar.tsx
+│   │   ├── Footer.tsx
+│   │   ├── ProjectCard.tsx
+│   │   ├── ExperienceCard.tsx
+│   │   ├── TiltCard.tsx
+│   │   ├── Reveal.tsx
+│   │   └── TypingText.tsx
+│   │
+│   └── data/
+│       ├── site.ts
+│       ├── experience.ts
+│       └── projects.ts
+│
+├── .gitignore
+├── next.config.mjs
+├── package.json
+├── package-lock.json
+├── postcss.config.mjs
+├── tailwind.config.ts
+├── tsconfig.json
+└── README.md
+```
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18 or later.
+- npm.
+- Git.
+
+The project has been built and tested using Node.js 22.
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/shubham0745/shubhamkumar-portfolio.git
+```
+
+### 2. Navigate to the project directory
+
+```bash
+cd shubhamkumar-portfolio
+```
+
+### 3. Install dependencies
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
-npm run build    # production build
-npm start        # serve the production build
 ```
 
-Node 18+ required (built and tested on Node 22).
+### 4. Start the development server
 
----
+```bash
+npm run dev
+```
 
-## Where the content lives
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-All copy sits in `src/data/` — you shouldn't need to touch components to update the site.
+### 5. Build for production
 
-| File | Holds |
+```bash
+npm run build
+```
+
+### 6. Run the production server locally
+
+```bash
+npm start
+```
+
+## Content Management
+
+The portfolio follows a centralized content-management approach. Most website content can be updated through the files inside `src/data/` without modifying the page components.
+
+| File | Responsibility |
 |---|---|
-| `src/data/site.ts` | Name, roles for the typing effect, email, socials, resume path, SEO URL, About copy, skills, education, certifications, publication |
-| `src/data/experience.ts` | Job cards (company, role, period, location, bullets, stack) |
-| `src/data/projects.ts` | Project cards — `featured: true` also surfaces it on the home page |
+| `src/data/site.ts` | Personal information, professional roles, email, social links, SEO URL, About content, skills, education, certifications, and publication details. |
+| `src/data/experience.ts` | Professional experience, organizations, roles, dates, locations, descriptions, and technology stacks. |
+| `src/data/projects.ts` | Project descriptions, technology stacks, featured status, and external links. |
 
-Your resume is served from `public/resume.pdf`. Replace that file to update the download link.
+### Updating Projects
 
-### Things to fill in before you go live
+Project information is maintained in:
 
-1. **`public/resume.pdf` is stale, and the download is switched off because of it.** The file is an old LinkedIn export: its headline and Experience section both lead with the role that has been removed from this site, and it predates the AI evaluation work, the Chegg and Ardent engagements and the Distributed Key-Value Cache project. Replace the PDF, then set `site.resumeReady = true` in `src/data/site.ts` — every resume button on the site reads that one flag.
-2. **Chegg is described as mathematics, not programming.** Both engagement certificates list the subjects as Algebra, Geometry, Trigonometry, Prealgebra and Precalculus. The copy reflects that. If you also worked on programming or computer science questions, send me something that evidences it and I'll update the entry.
-3. **"LLM Gateway" has no project card.** The folder on your Desktop is empty, so there was nothing to describe. Push the real repository and I'll write the entry from the source, the way the cache project was written.
-4. **Project links** — each project has a `links: { demo, github, paper }` object. The cache project points at its real GitHub repo; the wellness platform and the forecasting research have none yet. Add a `paper` URL for the publication when you have one.
-5. **Project screenshots** (optional) — drop images in `public/projects/` and set `image: "/projects/name.png"` on a project to replace the generated gradient panel.
-6. **Extra certificates** — `certifications` in `src/data/site.ts` lists only the three confirmed by the resume. Your certificates folder also holds Deloitte and Tata Forage simulations, Salesforce AI Associate, a Reliance AI certificate, NISM/SEBI certifications and an Oracle AI Vector certificate. Tell me which you want listed.
+```text
+src/data/projects.ts
+```
+
+Each project supports configurable information such as:
+
+- Project title and description.
+- Technology stack.
+- Featured status.
+- GitHub repository.
+- Live demonstration.
+- Research paper.
+- Project image.
+
+Setting `featured: true` allows a project to appear in the homepage featured-project section.
+
+Project screenshots can be placed inside:
+
+```text
+public/projects/
+```
+
+Reference them using their public paths in the project data.
+
+### Updating Experience
+
+Modify:
+
+```text
+src/data/experience.ts
+```
+
+This file controls the experience timeline and associated descriptions, including roles, organizations, employment periods, and technologies.
+
+### Updating Personal Information
+
+Modify:
+
+```text
+src/data/site.ts
+```
+
+This includes the website's personal information, professional identity, social profiles, SEO configuration, education, skills, and other profile details.
+
+### Resume Configuration
+
+The resume file is served from:
+
+```text
+public/resume.pdf
+```
+
+Resume availability is controlled through the `resumeReady` property in:
+
+```text
+src/data/site.ts
+```
+
+Replace the PDF with an accurate, updated version before enabling the download functionality.
+
+## Performance Engineering
+
+Performance and rendering efficiency are important considerations in this project.
+
+The original visual implementation used Three.js with React Three Fiber. It was replaced with a lightweight 2D canvas implementation to reduce JavaScript bundle overhead and avoid unnecessary WebGL rendering.
+
+The current `HeroField.tsx` implementation uses several optimizations:
+
+- Device pixel ratio capped at 1.5.
+- Animation runs only while the canvas is visible.
+- `IntersectionObserver` pauses off-screen rendering.
+- `visibilitychange` pauses animation when the browser tab is hidden.
+- Pre-rendered glow sprites avoid expensive repeated shadow rendering.
+- Reduced-motion preferences disable continuous animation.
+
+Additional performance decisions include:
+
+- Avoiding large-radius blur filters on continuously animated backgrounds.
+- Avoiding unnecessary backdrop-filter compositing on cards.
+- Using opacity and transform animations instead of animated blur filters.
+- Reusing shared components.
+- Minimizing unnecessary client-side JavaScript.
+
+The root layout configures Framer Motion's reduced-motion behavior through `MotionConfig`.
+
+These choices help maintain a responsive interface while preserving the intended visual design.
+
+## SEO & Metadata
+
+The portfolio includes several search and social-sharing optimizations.
+
+- Unique page titles and descriptions.
+- Canonical URLs.
+- Open Graph metadata.
+- Twitter metadata.
+- JSON-LD structured data.
+- Automatically generated sitemap.
+- Robots.txt configuration.
+- Custom Open Graph image.
+- Favicon and application metadata.
+
+The canonical website URL is configured centrally in:
+
+```text
+src/data/site.ts
+```
+
+The sitemap and robots configuration derive their domain from this value.
+
+**Production domain:**
+
+[https://shubhamkumar.site](https://shubhamkumar.site)
+
+## Security
+
+The project is primarily a frontend portfolio without a dedicated application backend.
+
+It currently does not implement:
+
+- Database connections.
+- User authentication.
+- API routes.
+- Middleware.
+- Server actions.
+- File uploads.
+- Cookie-based application sessions.
+- Local storage.
+- Environment-dependent application secrets.
+
+The Next.js configuration includes the following security-related settings:
+
+| Header / Setting | Purpose |
+|---|---|
+| `X-Frame-Options: DENY` | Prevents the website from being embedded in frames. |
+| `X-Content-Type-Options: nosniff` | Prevents MIME-type sniffing. |
+| `Referrer-Policy` | Controls referrer information sent to other websites. |
+| `Permissions-Policy` | Restricts access to selected browser features. |
+| `Strict-Transport-Security` | Enforces HTTPS for supported browsers. |
+| `poweredByHeader: false` | Removes the default Next.js powered-by header. |
+| `productionBrowserSourceMaps: false` | Disables production browser source-map generation. |
+
+These settings are configured in:
+
+```text
+next.config.mjs
+```
+
+### Security Considerations
+
+A Content Security Policy (CSP) is not currently configured.
+
+A stricter CSP can be introduced using nonce-based script authorization, but it should be tested carefully with the Next.js App Router and its rendering and caching behavior.
+
+Dependency advisories should also be reviewed periodically using:
+
+```bash
+npm audit
+```
+
+Framework and dependency upgrades should be tested against the existing application before being deployed.
+
+## Deployment
+
+The portfolio is designed to be deployed on [Vercel](https://vercel.com/), which provides native support for Next.js applications.
+
+### Deploy using GitHub and Vercel
+
+1. Push the latest source code to GitHub.
+2. Sign in to [Vercel](https://vercel.com/).
+3. Select **Add New → Project**.
+4. Import the portfolio GitHub repository.
+5. Allow Vercel to detect the Next.js framework.
+6. Review the build configuration.
+7. Deploy the project.
+
+The standard Next.js build configuration is automatically detected by Vercel.
+
+No environment variables are currently required by the application.
+
+Official deployment documentation:
+
+[Next.js Deployment Guide](https://nextjs.org/docs/app/getting-started/deploying)
+
+### Custom Domain Configuration
+
+The portfolio uses:
+
+**[shubhamkumar.site](https://shubhamkumar.site)**
+
+The domain is registered with GoDaddy, while the application is hosted on Vercel.
+
+To connect the domain:
+
+1. Deploy the project to Vercel.
+2. Open the Vercel project dashboard.
+3. Navigate to **Settings → Domains**.
+4. Add `shubhamkumar.site`.
+5. Add `www.shubhamkumar.site` if you want both versions supported.
+6. Configure the DNS records displayed by Vercel in GoDaddy's DNS management panel.
+7. Wait for DNS verification and SSL certificate provisioning.
+
+Common Vercel DNS records include:
+
+| Type | Host | Example value |
+|---|---|---|
+| A | `@` | `76.76.21.21` |
+| CNAME | `www` | `cname.vercel-dns-0.com` |
+
+**Important:** These are general-purpose examples. Always use the exact DNS values displayed in your Vercel project because project-specific records may differ.
+
+If conflicting records already exist, review them before making changes. Preserve unrelated DNS records, especially email-related MX and TXT records.
+
+Vercel automatically provisions SSL certificates after successful domain verification.
+
+Official documentation:
+
+- [Vercel Custom Domains](https://vercel.com/docs/domains/set-up-custom-domain)
+- [Vercel DNS Configuration](https://vercel.com/docs/domains/working-with-dns)
+
+## Quality Assurance
+
+The project has undergone production-readiness checks covering:
+
+- ESLint validation.
+- TypeScript type checking.
+- Next.js production build.
+- Route availability.
+- Canonical URL configuration.
+- Unique page metadata.
+- Open Graph and Twitter metadata.
+- JSON-LD validation.
+- Sitemap and robots.txt validation.
+- Security header configuration.
+- Accessibility attributes.
+- Internal navigation links.
+- External link validation.
+
+The recorded verification run passed 69 assertions.
+
+Run the following commands when making changes:
+
+```bash
+npm run lint
+npx tsc --noEmit
+npm run build
+```
+
+Always verify the production build before deploying changes.
+
+## Future Improvements
+
+Potential improvements for future iterations include:
+
+- A carefully configured Content Security Policy.
+- Framework and dependency upgrades with compatibility testing.
+- Additional project case studies and architecture documentation.
+- Updated project screenshots and demonstrations.
+- Expanded technical writing and research documentation.
+- Performance monitoring and Core Web Vitals analysis.
+
+## License
+
+This repository is primarily a personal portfolio project.
+
+Unless otherwise specified, the design, personal content, and project-specific materials are intended for showcasing my work. Please contact me before reusing substantial portions of the website or its personal content.
 
 ---
 
-## Deploying
+## Connect
 
-### Vercel (recommended — it's the Next.js host)
+**Shubham Kumar**
 
-1. Push this folder to a GitHub repo.
-2. Go to [vercel.com/new](https://vercel.com/new), import the repo.
-3. Framework preset auto-detects as **Next.js**. No env vars needed. Click **Deploy**.
+Software Engineering · AI Training & Evaluation · Technical Benchmarking · Applied Research
 
-You get a `*.vercel.app` URL in about a minute.
+- Portfolio: [shubhamkumar.site](https://shubhamkumar.site)
+- GitHub: [github.com/shubham0745](https://github.com/shubham0745)
+- LinkedIn: [LinkedIn Profile](https://www.linkedin.com/)
 
-### Pointing your domain at it
-
-1. Buy the domain (Namecheap, GoDaddy, Cloudflare, Hostinger — any registrar).
-2. In Vercel: **Project → Settings → Domains → Add**, enter your domain.
-3. Vercel shows the DNS records to create at your registrar:
-   - Apex domain (`yourname.com`) → an **A** record to `76.76.21.21`
-   - `www` subdomain → a **CNAME** to `cname.vercel-dns.com`
-4. Save at the registrar and wait for propagation (usually minutes, up to 48h).
-5. HTTPS is issued automatically.
-
-Then set `url` in `src/data/site.ts` to the live domain and redeploy so social previews use it.
+For professional opportunities, technical collaborations, freelance projects, and research discussions, feel free to connect.
 
 ---
 
-## Structure
-
-```
-src/
-├── app/                      # App Router pages — one folder per route
-│   ├── layout.tsx            # Shell: fonts, metadata, nav, footer, MotionConfig
-│   ├── page.tsx              # Home
-│   ├── about/ experience/ projects/ contact/
-│   ├── opengraph-image.tsx   # Social preview card, rendered via next/og
-│   ├── sitemap.ts            # Built from `nav`
-│   ├── robots.ts             # Allows all, points at sitemap.xml
-│   ├── not-found.tsx         # 404
-│   ├── error.tsx             # Runtime error boundary with a retry button
-│   ├── icon.svg              # Favicon
-│   └── globals.css           # Tokens, card/glow utilities, reduced-motion rules
-├── components/
-│   ├── visuals/
-│   │   ├── HeroField.tsx     # Home: canvas node field with orbit rings
-│   │   └── StackDiagram.tsx  # About: request path through the backend tiers
-│   ├── Hero.tsx  Navbar.tsx  Footer.tsx  ProjectCard.tsx  ExperienceCard.tsx
-│   ├── TiltCard.tsx          # 3D cursor tilt + spotlight
-│   ├── Reveal.tsx            # Scroll-reveal primitives
-│   └── TypingText.tsx        # Hero typing effect
-└── data/                     # ← all content
-```
-
-`sitemap.ts` and `robots.ts` both derive their URLs from `site.url`, so they are only correct once step 2 above is done.
-
-### Notes on performance
-
-This site used to render its hero and about visuals with `three.js` via React Three Fiber. That was removed: it was ~45% of the modules on the home route, kept a WebGL context running every frame, and was throwing `R3F: Hooks can only be used within the Canvas component!` at runtime. `HeroField.tsx` reproduces the same look on a 2D canvas in a couple of kilobytes.
-
-If you extend the visuals, keep the four guards that make `HeroField` cheap:
-
-- device pixel ratio capped at 1.5
-- the `requestAnimationFrame` loop only runs while the canvas is on screen (`IntersectionObserver`) and the tab is visible (`visibilitychange`)
-- glow comes from blitting a pre-rendered sprite, never `shadowBlur`
-- `prefers-reduced-motion` paints one static frame and stops
-
-Three other things were deliberately removed for the same reason, so please don't add them back without measuring:
-
-- **large-radius `blur()` on big elements.** The ambient background used four ~40rem divs with `blur-3xl`, two of them opacity-animating forever. A radial gradient is already soft, so the blur cost most of the scroll smoothness and bought nothing.
-- **`backdrop-blur` on cards.** It promotes every card to its own compositing layer. The card panel is simply more opaque now.
-- **animating `filter: blur()` in scroll reveals.** `Reveal` animates opacity and transform only.
-
-Framer's `MotionConfig reducedMotion="user"` is set in the root layout: anyone with "reduce motion" enabled gets content faded in without transform animation, and the CSS in `globals.css` stills the looping ambient animations.
-
-### Notes on security
-
-There is no backend here: no API routes, no middleware, no server actions, no database, no auth, no forms, no file uploads, no cookies, no `localStorage`, and no environment variables. Most of the usual web vulnerability classes are absent by construction rather than defended against.
-
-What is actually configured, in `next.config.mjs`:
-
-- `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy` and `Strict-Transport-Security`
-- `poweredByHeader: false` to drop the Next version disclosure
-- `productionBrowserSourceMaps: false` so original sources are never shipped
-
-**Follow-up worth doing:** there is no `Content-Security-Policy`. A useful one needs per-request nonces in `middleware.ts`, because the App Router injects inline hydration scripts; a CSP with `'unsafe-inline'` would look reassuring while blocking very little.
-
-**Known advisories:** `npm audit` reports issues against the `postcss` copy bundled inside `next` itself. They are build-time CSS tooling issues that require attacker-controlled CSS, and all CSS here is yours. The only fix is upgrading to `next@16`, a breaking major — worth scheduling, not worth rushing.
-
-> One gotcha if you extend `Reveal.tsx`: don't swap a `motion.div` for a plain `div` based on `useReducedMotion()`. The hook returns `false` during SSR, so the element type differs between server and client, hydration fails, and the content stays stuck at `opacity: 0`.
+<p align="center">
+  Built with Next.js, TypeScript, and a focus on thoughtful engineering.
+</p>
