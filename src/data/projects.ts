@@ -38,31 +38,8 @@ export const projects: Project[] = [
     featured: true,
     links: {},
   },
-  // ---------------------------------------------------------------------------
-  // STUBS — replace the copy below with your real projects, or delete them.
-  // ---------------------------------------------------------------------------
-  {
-    slug: "book-finder",
-    title: "Book Finder",
-    blurb: "Search and discovery app for books with filtering and a clean reading list.",
-    description:
-      "Describe the problem, what you built, and one measurable outcome. Two to four sentences is plenty.",
-    stack: ["React", "Node.js", "MongoDB"],
-    year: "2024",
-    stub: true,
-    links: {},
-  },
-  {
-    slug: "api-caching-layer",
-    title: "Caching & Query Optimization Toolkit",
-    blurb: "Utilities for profiling slow Django queries and layering Redis caches over hot endpoints.",
-    description:
-      "Describe the problem, what you built, and one measurable outcome. Two to four sentences is plenty.",
-    stack: ["Python", "Django", "Redis", "MySQL"],
-    year: "2026",
-    stub: true,
-    links: {},
-  },
+  // Add new projects here. Set `featured: true` to also surface one on the home
+  // page and in the "Case notes" section of /projects.
 ];
 
 export const featuredProjects = projects.filter((p) => p.featured);

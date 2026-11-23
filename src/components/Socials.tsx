@@ -2,12 +2,14 @@ import { Github, Linkedin, Mail, Twitter } from "lucide-react";
 import { site } from "@/data/site";
 import { cn } from "@/lib/utils";
 
+// Unconfigured socials are blank in site.ts — drop them so we never render a
+// link that 404s or points at someone else's profile.
 const links = [
   { href: site.socials.github, label: "GitHub", Icon: Github },
   { href: site.socials.linkedin, label: "LinkedIn", Icon: Linkedin },
   { href: site.socials.twitter, label: "X / Twitter", Icon: Twitter },
   { href: `mailto:${site.email}`, label: "Email", Icon: Mail },
-];
+].filter((link) => link.href.trim() !== "");
 
 export default function Socials({ className, size = 18 }: { className?: string; size?: number }) {
   return (

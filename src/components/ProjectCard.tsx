@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ArrowUpRight, FileText, Github } from "lucide-react";
 import type { Project } from "@/data/projects";
 import Chip from "./Chip";
@@ -30,11 +31,12 @@ export default function ProjectCard({ project, index = 0 }: { project: Project; 
             }}
           />
           {project.image ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={project.image}
               alt={project.title}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+              fill
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
             />
           ) : (
             <div className="absolute inset-0 grid place-items-center">

@@ -10,6 +10,13 @@ export const metadata: Metadata = {
   description: `Get in touch with ${site.name} — email, LinkedIn and GitHub.`,
 };
 
+/** Pulls "in/shubham-kumar-351000334" out of the full profile URL so the label
+ *  shown on the card can never drift away from the link it points at. */
+function linkedinHandle(url: string) {
+  return url.match(/linkedin\.com\/(in\/[^/?#]+)/i)?.[1] ?? "LinkedIn profile";
+}
+
+// Channels whose href is blank in site.ts are dropped rather than rendered broken.
 const channels = [
   {
     label: "Email",
@@ -19,7 +26,7 @@ const channels = [
   },
   {
     label: "LinkedIn",
-    value: "in/shubham-kumar",
+    value: linkedinHandle(site.socials.linkedin),
     href: site.socials.linkedin,
     Icon: Linkedin,
   },
@@ -35,7 +42,7 @@ const channels = [
     href: site.resumeUrl,
     Icon: Download,
   },
-];
+].filter((channel) => channel.href.trim() !== "");
 
 export default function ContactPage() {
   return (

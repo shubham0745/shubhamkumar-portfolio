@@ -34,9 +34,9 @@ Your resume is served from `public/resume.pdf`. Replace that file to update the 
 
 ### Things to fill in before you go live
 
-1. **`src/data/site.ts` → `socials.github`** — currently a placeholder (`github.com/shubhamkumar`). Same for `socials.twitter`.
-2. **`src/data/site.ts` → `url`** — set this to your real domain so Open Graph tags and `metadataBase` are correct.
-3. **`src/data/projects.ts`** — the last two entries are marked `stub: true` and render a small orange **DRAFT** badge. Rewrite them with real projects or delete them.
+1. **`src/data/site.ts` → `socials.github`** and **`socials.twitter`** — both blank. The old GitHub placeholder (`github.com/shubhamkumar`) turned out to be an unrelated account with no repositories, so it was cleared rather than left linked. Any social set to `""` is skipped everywhere, so the GitHub and X icons are currently absent from the nav, footer and contact page; they reappear the moment you paste a URL in.
+2. **`src/data/site.ts` → `url`** — still the placeholder `https://shubhamkumar.dev`. Set this to your real domain: it feeds the Open Graph tags, `metadataBase`, `sitemap.xml` and `robots.txt`.
+3. **`src/data/projects.ts`** — holds only the two real projects. The two placeholder entries that shipped with filler copy have been removed, so add real projects in their place. Setting `stub: true` on an entry still renders a small orange **DRAFT** badge if you want to park a work-in-progress.
 4. **Project links** — each project has a `links: { demo, github, paper }` object. Fill them in and the card grows Live / Code / Paper links automatically.
 5. **Project screenshots** (optional) — drop images in `public/projects/` and set `image: "/projects/name.png"` on a project to replace the generated gradient panel.
 
@@ -85,6 +85,11 @@ src/
 │   ├── page.tsx              # Home
 │   ├── about/ experience/ projects/ contact/
 │   ├── student-guide/        # list page + [slug] article pages
+│   ├── opengraph-image.tsx   # Social preview card, generated at build via next/og
+│   ├── sitemap.ts            # Built from `nav` + `guides`
+│   ├── robots.ts             # Allows all, points at sitemap.xml
+│   ├── not-found.tsx         # 404
+│   ├── error.tsx             # Runtime error boundary with a retry button
 │   ├── icon.svg              # Favicon
 │   └── globals.css           # Tokens, card/glow utilities, reduced-motion rules
 ├── components/
@@ -94,10 +99,13 @@ src/
 │   │   └── LazyScene.tsx     # Dynamic import wrapper (ssr: false)
 │   ├── Hero.tsx  Navbar.tsx  Footer.tsx  ProjectCard.tsx  ExperienceCard.tsx
 │   ├── TiltCard.tsx          # 3D cursor tilt + spotlight
+│   ├── GuideCard.tsx         # Student Guide row + cursor-tracked spotlight
 │   ├── Reveal.tsx            # Scroll-reveal primitives
 │   └── TypingText.tsx        # Hero typing effect
 └── data/                     # ← all content
 ```
+
+`sitemap.ts` and `robots.ts` both derive their URLs from `site.url`, so they are only correct once step 2 above is done.
 
 ### Notes on the 3D
 

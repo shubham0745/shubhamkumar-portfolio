@@ -12,11 +12,16 @@ export const site = {
   email: "shubhamkqr7430@gmail.com",
   phone: "+91 91994 70482",
   resumeUrl: "/resume.pdf",
-  // TODO: replace with your real GitHub / X handles
+  // Empty string = not configured. Links with an empty href are skipped
+  // everywhere (navbar, footer, contact page) rather than rendered broken.
+  //
+  // TODO: paste your real GitHub profile URL here. The previous placeholder
+  // (github.com/shubhamkumar) belongs to an unrelated, empty account.
+  // TODO: paste your X profile URL, or leave blank to hide the icon entirely.
   socials: {
-    github: "https://github.com/shubhamkumar",
+    github: "",
     linkedin: "https://www.linkedin.com/in/shubham-kumar-351000334",
-    twitter: "https://x.com/",
+    twitter: "",
   },
   // Used for SEO + Open Graph. Update after you point your domain at Vercel.
   url: "https://shubhamkumar.dev",
