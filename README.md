@@ -33,11 +33,12 @@ Your resume is served from `public/resume.pdf`. Replace that file to update the 
 
 ### Things to fill in before you go live
 
-1. **`src/data/site.ts` → `socials.github`** and **`socials.twitter`** — both blank. The old GitHub placeholder (`github.com/shubhamkumar`) turned out to be an unrelated account with no repositories, so it was cleared rather than left linked. Any social set to `""` is skipped everywhere, so the GitHub and X icons are currently absent from the nav, footer and contact page; they reappear the moment you paste a URL in.
-2. **`src/data/site.ts` → `url`** — still the placeholder `https://shubhamkumar.dev`. Set this to your real domain: it feeds the Open Graph tags, `metadataBase`, `sitemap.xml` and `robots.txt`.
-3. **`src/data/projects.ts`** — holds only the two real projects. The two placeholder entries that shipped with filler copy have been removed, so add real projects in their place. Setting `stub: true` on an entry still renders a small orange **DRAFT** badge if you want to park a work-in-progress.
-4. **Project links** — each project has a `links: { demo, github, paper }` object. Fill them in and the card grows Live / Code / Paper links automatically.
+1. **`public/resume.pdf` is stale, and the download is switched off because of it.** The file is an old LinkedIn export: its headline and Experience section both lead with the role that has been removed from this site, and it predates the AI evaluation work, the Chegg and Ardent engagements and the Distributed Key-Value Cache project. Replace the PDF, then set `site.resumeReady = true` in `src/data/site.ts` — every resume button on the site reads that one flag.
+2. **Chegg is described as mathematics, not programming.** Both engagement certificates list the subjects as Algebra, Geometry, Trigonometry, Prealgebra and Precalculus. The copy reflects that. If you also worked on programming or computer science questions, send me something that evidences it and I'll update the entry.
+3. **"LLM Gateway" has no project card.** The folder on your Desktop is empty, so there was nothing to describe. Push the real repository and I'll write the entry from the source, the way the cache project was written.
+4. **Project links** — each project has a `links: { demo, github, paper }` object. The cache project points at its real GitHub repo; the wellness platform and the forecasting research have none yet. Add a `paper` URL for the publication when you have one.
 5. **Project screenshots** (optional) — drop images in `public/projects/` and set `image: "/projects/name.png"` on a project to replace the generated gradient panel.
+6. **Extra certificates** — `certifications` in `src/data/site.ts` lists only the three confirmed by the resume. Your certificates folder also holds Deloitte and Tata Forage simulations, Salesforce AI Associate, a Reliance AI certificate, NISM/SEBI certifications and an Oracle AI Vector certificate. Tell me which you want listed.
 
 ---
 

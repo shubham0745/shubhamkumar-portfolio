@@ -1,0 +1,12 @@
+/             200  127314 bytes
+/about        200  88473 bytes
+/experience   200  91945 bytes
+/projects     200  96560 bytes
+/contact      200  51741 bytes
+
+accenture in rendered HTML : not present
+shubhamkumar.site present  : yes
+shubhamkumar.dev present   : not present
+ld+json structured data    : yes
+resume.pdf link present    : not present (gated OK)
+github.com/shubham0745     : yes

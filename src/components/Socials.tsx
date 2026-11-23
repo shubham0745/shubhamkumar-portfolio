@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, Twitter } from "lucide-react";
+import { Github, Instagram, Linkedin, Mail, Twitter } from "lucide-react";
 import { site } from "@/data/site";
 import { cn } from "@/lib/utils";
 
@@ -8,6 +8,7 @@ const links = [
   { href: site.socials.github, label: "GitHub", Icon: Github },
   { href: site.socials.linkedin, label: "LinkedIn", Icon: Linkedin },
   { href: site.socials.twitter, label: "X / Twitter", Icon: Twitter },
+  { href: site.socials.instagram, label: "Instagram", Icon: Instagram },
   { href: `mailto:${site.email}`, label: "Email", Icon: Mail },
 ].filter((link) => link.href.trim() !== "");
 

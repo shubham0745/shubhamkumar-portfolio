@@ -21,42 +21,44 @@ export default function Hero() {
       {/* Keeps text readable over the field */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-[radial-gradient(ellipse_62%_48%_at_50%_50%,rgba(4,5,15,0.93)_0%,rgba(4,5,15,0.62)_55%,transparent_85%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_65%_50%_at_50%_50%,rgba(4,5,15,0.94)_0%,rgba(4,5,15,0.66)_55%,transparent_85%)]"
       />
 
       <motion.div
         initial="hidden"
         animate="visible"
-        transition={{ staggerChildren: 0.08 }}
-        className="relative z-10 mx-auto w-full max-w-4xl px-5 text-center sm:px-8"
+        transition={{ staggerChildren: 0.07 }}
+        className="relative z-10 mx-auto w-full max-w-5xl px-5 text-center sm:px-8"
       >
         <motion.p
           variants={fadeUp}
           transition={{ duration: 0.55 }}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-xs text-slate-300"
+          className="mb-7 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-[11px] text-slate-300 sm:text-xs"
         >
-          <span className="relative flex h-2 w-2">
+          <span className="relative flex h-2 w-2 shrink-0">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
           </span>
-          Open to backend &amp; systems engineering roles
+          {site.availability}
         </motion.p>
 
         <motion.h1
           variants={fadeUp}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="font-display text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-6xl lg:text-7xl"
+          className="font-display tracking-tight"
         >
-          <span className="block text-slate-400/90 text-xl font-medium sm:text-2xl">
-            Hi, I&apos;m
+          <span className="block text-base font-medium text-accent-soft sm:text-lg">
+            {site.name}
           </span>
-          <span className="text-gradient">{site.name}</span>
+          <span className="mt-3 block text-3xl font-extrabold leading-[1.12] text-gradient sm:text-5xl lg:text-6xl">
+            {site.headline}
+          </span>
         </motion.h1>
 
         <motion.div
           variants={fadeUp}
           transition={{ duration: 0.6 }}
-          className="mx-auto mt-5 min-h-[2.25rem] font-display text-lg text-slate-200 sm:text-2xl"
+          className="mx-auto mt-6 min-h-[2.25rem] font-display text-base text-slate-200 sm:text-xl"
         >
           <TypingText phrases={site.roles} />
         </motion.div>
@@ -64,10 +66,9 @@ export default function Hero() {
         <motion.p
           variants={fadeUp}
           transition={{ duration: 0.6 }}
-          className="mx-auto mt-5 max-w-xl text-[15px] leading-relaxed text-slate-400"
+          className="mx-auto mt-6 max-w-2xl text-[15px] leading-relaxed text-slate-400"
         >
-          {site.tagline}. Most of my work lives in Python, Django and MySQL, with Redis, Celery and
-          Elasticsearch doing the heavy lifting around them.
+          {site.subtitle}
         </motion.p>
 
         <motion.div
@@ -76,11 +77,20 @@ export default function Hero() {
           className="mt-9 flex flex-wrap items-center justify-center gap-3"
         >
           <Button href="/projects" variant="primary">
-            View Projects <ArrowRight size={16} />
+            Explore My Projects <ArrowRight size={16} />
           </Button>
-          <Button href={site.resumeUrl} variant="ghost" download>
-            Download Resume <Download size={16} />
+          <Button href="/experience" variant="ghost">
+            View My Experience
           </Button>
+          <Button href="/contact" variant="ghost">
+            Let&apos;s Collaborate
+          </Button>
+          {/* Hidden until public/resume.pdf is replaced — see site.resumeReady */}
+          {site.resumeReady && (
+            <Button href={site.resumeUrl} variant="ghost" download>
+              Download Resume <Download size={16} />
+            </Button>
+          )}
         </motion.div>
 
         <motion.p

@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { Award, BookOpen, GraduationCap, Star } from "lucide-react";
-import Section, { SectionHeading } from "@/components/Section";
+import { Award, BookOpen, GraduationCap } from "lucide-react";
+import Section from "@/components/Section";
 import PageHeader from "@/components/PageHeader";
-import Reveal, { RevealGroup, RevealItem } from "@/components/Reveal";
+import Reveal from "@/components/Reveal";
 import Chip from "@/components/Chip";
 import Button from "@/components/Button";
-import StackDiagram from "@/components/visuals/StackDiagram";
+import EngineeringIdentity from "@/components/visuals/EngineeringIdentity";
 import { about, certifications, education, publication, site, skills } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "About",
-  description: `About ${site.name} — backend developer, MCA from BIT Mesra, working in Python, Django, MySQL and AWS.`,
+  description: `About ${site.name} — software developer and independent AI trainer/evaluator. MCA from BIT Mesra, working in Python, Django, PostgreSQL and Redis.`,
+  alternates: { canonical: "/about" },
 };
 
 export default function AboutPage() {
@@ -28,68 +29,27 @@ export default function AboutPage() {
           </div>
           <Reveal delay={0.3}>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Button href={site.resumeUrl} download>
-                Download Resume
+              <Button href="/contact">Get in touch</Button>
+              <Button href="/projects" variant="ghost">
+                See the projects
               </Button>
-              <Button href="/contact" variant="ghost">
-                Get in touch
-              </Button>
+              {/* Hidden until public/resume.pdf is replaced — see site.resumeReady */}
+              {site.resumeReady && (
+                <Button href={site.resumeUrl} variant="ghost" download>
+                  Download Resume
+                </Button>
+              )}
             </div>
           </Reveal>
         </div>
 
-        {/* Request path through the stack I work in */}
+        {/* The three areas the work spans, and what each gives the others */}
         <Reveal direction="left" className="order-first lg:order-last">
-          <div className="relative h-[22rem] w-full sm:h-[26rem] lg:h-[30rem]">
-            <StackDiagram />
-          </div>
+          <EngineeringIdentity />
         </Reveal>
       </div>
 
-      {/* Highlights */}
-      <div className="pt-24">
-        <Reveal>
-          <SectionHeading eyebrow="Track record" title="What I&rsquo;ve done" />
-        </Reveal>
-        <RevealGroup className="grid gap-4 sm:grid-cols-2">
-          {about.highlights.map((item) => (
-            <RevealItem key={item}>
-              <div className="card-glow group flex h-full items-start gap-3 p-5">
-                <Star size={16} className="mt-0.5 shrink-0 text-accent" strokeWidth={2} />
-                <p className="text-sm leading-relaxed text-slate-300">{item}</p>
-              </div>
-            </RevealItem>
-          ))}
-        </RevealGroup>
-      </div>
-
-      {/* Skills */}
-      <div className="pt-24">
-        <Reveal>
-          <div className="gradient-border group rounded-2xl p-8 sm:p-10">
-            <h2 className="text-center font-display text-2xl font-bold text-white sm:text-3xl">
-              My Technical Skills
-            </h2>
-            <div className="mt-8 space-y-5">
-              {skills.map((row) => (
-                <div
-                  key={row.group}
-                  className="flex flex-col gap-3 border-b border-white/5 pb-5 last:border-0 last:pb-0 sm:flex-row sm:items-center sm:gap-6"
-                >
-                  <p className="w-40 shrink-0 text-sm font-medium text-accent-soft">{row.group}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {row.items.map((item) => (
-                      <Chip key={item}>{item}</Chip>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </Reveal>
-      </div>
-
-      {/* Education + credentials */}
+      {/* Education + credentials — kept ahead of the skills table on purpose */}
       <div className="grid gap-6 pt-24 lg:grid-cols-2">
         <Reveal>
           <div className="card-glow group h-full p-7">
@@ -136,6 +96,38 @@ export default function AboutPage() {
               </h3>
               <p className="mt-5 text-sm leading-relaxed text-slate-300">{publication.title}</p>
               <p className="mt-2 font-mono text-xs text-slate-500">{publication.note}</p>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+
+      {/* Technical skills */}
+      <div className="pt-24">
+        <Reveal>
+          <div className="gradient-border group rounded-2xl p-8 sm:p-10">
+            <h2 className="text-center font-display text-2xl font-bold text-white sm:text-3xl">
+              My Technical Skills
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-center text-sm text-slate-400">
+              Everything below is used in the work on this site — the gateway, the distributed
+              cache, the wellness platform, the forecasting research or the internships.
+            </p>
+            <div className="mt-9 space-y-5">
+              {skills.map((row) => (
+                <div
+                  key={row.group}
+                  className="flex flex-col gap-3 border-b border-white/5 pb-5 last:border-0 last:pb-0 sm:flex-row sm:gap-6"
+                >
+                  <p className="w-full shrink-0 text-sm font-medium text-accent-soft sm:w-56 sm:pt-1">
+                    {row.group}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {row.items.map((item) => (
+                      <Chip key={item}>{item}</Chip>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </Reveal>

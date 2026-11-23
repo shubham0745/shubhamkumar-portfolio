@@ -5,7 +5,7 @@ import AmbientBackground from "@/components/AmbientBackground";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import MotionProvider from "@/components/MotionProvider";
-import { site } from "@/data/site";
+import { certifications, education, site, skills } from "@/data/site";
 
 const body = Inter({
   subsets: ["latin"],
@@ -20,43 +20,110 @@ const display = Sora({
   display: "swap",
 });
 
+const SEO_TITLE = `${site.name} | Software Engineer & AI Trainer`;
+const SEO_DESCRIPTION =
+  `Explore ${site.name}'s portfolio featuring backend engineering, AI training and evaluation, ` +
+  `software projects, technical problem-solving and research.`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} — Backend Developer`,
+    default: SEO_TITLE,
     template: `%s · ${site.name}`,
   },
-  description: `${site.name} — backend developer working in Python, Django, MySQL, Redis and AWS. ${site.tagline}.`,
+  description: SEO_DESCRIPTION,
+  applicationName: `${site.name} Portfolio`,
   keywords: [
     site.name,
+    "software engineer",
     "backend developer",
+    "AI trainer",
+    "AI evaluator",
     "Python",
     "Django",
     "REST API",
-    "MySQL",
+    "PostgreSQL",
     "Redis",
-    "Celery",
     "portfolio",
   ],
-  authors: [{ name: site.name }],
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     url: site.url,
-    title: `${site.name} — Backend Developer`,
-    description: site.tagline,
-    siteName: site.name,
+    title: SEO_TITLE,
+    description: SEO_DESCRIPTION,
+    siteName: `${site.name} — Portfolio`,
+    locale: "en_IN",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — Backend Developer`,
-    description: site.tagline,
+    title: SEO_TITLE,
+    description: SEO_DESCRIPTION,
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+  },
 };
 
 export const viewport: Viewport = {
   themeColor: "#04050f",
   colorScheme: "dark",
+};
+
+/**
+ * Person + WebSite structured data.
+ *
+ * Built from the same `site.ts` values the pages render, so it cannot drift out
+ * of sync with what a visitor actually sees. Serialised with JSON.stringify from
+ * our own static data — there is no user input anywhere in this object.
+ */
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${site.url}/#person`,
+      name: site.name,
+      url: site.url,
+      email: `mailto:${site.email}`,
+      jobTitle: ["Software Engineer", "AI Trainer & Evaluator"],
+      description: site.subtitle,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Ranchi",
+        addressRegion: "Jharkhand",
+        addressCountry: "IN",
+      },
+      alumniOf: education.map((e) => ({
+        "@type": "EducationalOrganization",
+        name: e.school,
+      })),
+      hasCredential: certifications.map((c) => ({
+        "@type": "EducationalOccupationalCredential",
+        name: c,
+      })),
+      knowsAbout: skills.flatMap((group) => group.items),
+      sameAs: [
+        site.socials.github,
+        site.socials.linkedin,
+        site.socials.twitter,
+        site.socials.instagram,
+      ].filter((url) => url.trim() !== ""),
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${site.url}/#website`,
+      url: site.url,
+      name: `${site.name} — Portfolio`,
+      description: SEO_DESCRIPTION,
+      inLanguage: "en",
+      publisher: { "@id": `${site.url}/#person` },
+    },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -67,6 +134,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <noscript>
           <style>{`[style*="opacity:0"]{opacity:1!important;filter:none!important;transform:none!important}`}</style>
         </noscript>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
       </head>
       <body className="min-h-screen font-sans antialiased">
         <MotionProvider>

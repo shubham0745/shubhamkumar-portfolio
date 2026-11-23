@@ -14,11 +14,11 @@ import { site } from "@/data/site";
  */
 export const runtime = "edge";
 
-export const alt = `${site.name} — Backend Developer`;
+export const alt = `${site.name} — Software Engineer & AI Trainer`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const chips = ["Python", "Django", "MySQL", "Redis", "AWS"];
+const chips = ["Python", "Django", "PostgreSQL", "Redis", "AI Evaluation"];
 
 /**
  * Social preview card, rendered at build time.
@@ -107,12 +107,21 @@ export default function Image() {
             {site.name}
           </div>
 
-          <div style={{ display: "flex", fontSize: 42, color: "#93c5fd", marginTop: 14 }}>
-            {site.roles[0]}
+          <div style={{ display: "flex", fontSize: 38, color: "#93c5fd", marginTop: 14 }}>
+            Software Engineer &amp; AI Trainer
           </div>
 
-          <div style={{ display: "flex", fontSize: 28, color: "#94a3b8", marginTop: 26 }}>
-            {site.tagline}
+          <div
+            style={{
+              display: "flex",
+              fontSize: 26,
+              color: "#94a3b8",
+              marginTop: 24,
+              maxWidth: 900,
+              lineHeight: 1.35,
+            }}
+          >
+            {site.headline}
           </div>
 
           <div style={{ display: "flex", flexDirection: "row", marginTop: 46 }}>

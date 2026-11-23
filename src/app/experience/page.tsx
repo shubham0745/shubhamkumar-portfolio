@@ -9,7 +9,8 @@ import { site } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Experience",
-  description: `Professional experience of ${site.name} — Accenture, Careers360 and Tata Steel Foundation.`,
+  description: `Experience of ${site.name} — backend development at Careers360 and Tata Steel Foundation, independent AI training and evaluation, and freelance technical problem-solving.`,
+  alternates: { canonical: "/experience" },
 };
 
 export default function ExperiencePage() {
@@ -18,7 +19,7 @@ export default function ExperiencePage() {
       <PageHeader
         eyebrow="Career"
         title="Experience"
-        description="Three roles, one through-line: building backend services that stay fast and predictable under real traffic."
+        description="Backend engineering in production, independent AI training and evaluation, and freelance technical problem-solving. Each entry below states whether it was an internship or a freelance engagement."
       />
 
       <div className="relative">
@@ -30,7 +31,7 @@ export default function ExperiencePage() {
 
         <div className="space-y-8 md:pl-12">
           {experience.map((item, i) => (
-            <Reveal key={item.company} delay={i * 0.08}>
+            <Reveal key={`${item.company}-${item.role}`} delay={i * 0.06}>
               <div className="relative">
                 {/* Timeline node */}
                 <span
@@ -48,12 +49,16 @@ export default function ExperiencePage() {
 
       <Reveal delay={0.1}>
         <div className="mt-16 flex flex-wrap items-center justify-center gap-3">
-          <Button href={site.resumeUrl} download>
-            Download Resume
+          <Button href="/projects">See the projects</Button>
+          <Button href="/contact" variant="ghost">
+            Get in touch
           </Button>
-          <Button href="/projects" variant="ghost">
-            See the projects
-          </Button>
+          {/* Hidden until public/resume.pdf is replaced — see site.resumeReady */}
+          {site.resumeReady && (
+            <Button href={site.resumeUrl} variant="ghost" download>
+              Download Resume
+            </Button>
+          )}
         </div>
       </Reveal>
     </Section>

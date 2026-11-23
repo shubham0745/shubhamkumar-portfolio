@@ -3,106 +3,28 @@ import { ArrowRight, ArrowUpRight, MapPin } from "lucide-react";
 import Hero from "@/components/Hero";
 import Section, { SectionHeading } from "@/components/Section";
 import ProjectCard from "@/components/ProjectCard";
+import Capabilities from "@/components/Capabilities";
 import Reveal, { RevealGroup, RevealItem } from "@/components/Reveal";
 import Button from "@/components/Button";
 import Chip from "@/components/Chip";
 import { featuredProjects } from "@/data/projects";
 import { experience } from "@/data/experience";
-import { site, skills } from "@/data/site";
-
-const stats = [
-  { value: "3", label: "Engineering roles" },
-  { value: "100+", label: "Users on shipped product" },
-  { value: "3", label: "Cloud & AI certifications" },
-  { value: "1", label: "Research publication" },
-];
+import { coreStack, site } from "@/data/site";
 
 export default function HomePage() {
-  const current = experience[0];
+  // Lead with current work, then the two most recent completed roles.
+  const preview = experience.slice(0, 3);
 
   return (
     <>
       <Hero />
 
-      {/* Stats strip */}
-      <Section className="pt-8">
-        <RevealGroup className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {stats.map((s) => (
-            <RevealItem key={s.label}>
-              <div className="card-glow group h-full p-5 text-center">
-                <p className="font-display text-3xl font-bold text-white sm:text-4xl">{s.value}</p>
-                <p className="mt-1 text-xs leading-snug text-slate-400">{s.label}</p>
-              </div>
-            </RevealItem>
-          ))}
-        </RevealGroup>
-      </Section>
-
-      {/* Currently */}
-      <Section className="pt-24">
-        <Reveal>
-          <div className="gradient-border group relative overflow-hidden rounded-2xl p-8 sm:p-10">
-            <div
-              aria-hidden
-              className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.18),transparent_70%)]"
-            />
-            <div className="relative">
-              <p className="font-mono text-xs uppercase tracking-[0.25em] text-accent-soft">
-                Currently
-              </p>
-              <h2 className="mt-4 max-w-3xl font-display text-2xl font-semibold leading-snug text-white sm:text-3xl">
-                {current.role} at {current.company}, building backend services in Python and Java,
-                after shipping production Django APIs at Careers360.
-              </h2>
-              <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
-                <Link
-                  href="/experience"
-                  className="inline-flex items-center gap-1.5 text-sm text-accent-soft transition-colors hover:text-white"
-                >
-                  See the full timeline <ArrowRight size={15} />
-                </Link>
-                <p className="inline-flex items-center gap-1.5 text-xs text-slate-500">
-                  <MapPin size={13} strokeWidth={1.8} />
-                  {current.location} · {current.period}
-                </p>
-              </div>
-            </div>
-          </div>
-        </Reveal>
-      </Section>
-
-      {/* Featured projects */}
-      <Section className="pt-24">
+      {/* What I work on */}
+      <Section className="pt-10">
         <Reveal>
           <SectionHeading
-            eyebrow="Selected work"
-            title="Recent Projects"
-            action={
-              <Link
-                href="/projects"
-                className="inline-flex items-center gap-1.5 text-sm text-slate-400 transition-colors hover:text-accent"
-              >
-                All projects <ArrowUpRight size={15} />
-              </Link>
-            }
-          />
-        </Reveal>
-
-        <RevealGroup className="grid gap-6 md:grid-cols-2">
-          {featuredProjects.map((project, i) => (
-            <RevealItem key={project.slug} className="[perspective:1200px]">
-              <ProjectCard project={project} index={i} />
-            </RevealItem>
-          ))}
-        </RevealGroup>
-      </Section>
-
-      {/* Toolbox */}
-      <Section className="pt-24">
-        <Reveal>
-          <SectionHeading
-            eyebrow="Toolbox"
-            title="What I build with"
+            eyebrow="Capabilities"
+            title="What I Work On"
             action={
               <Link
                 href="/about"
@@ -114,22 +36,123 @@ export default function HomePage() {
           />
         </Reveal>
 
-        <RevealGroup className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {skills.map((row) => (
-            <RevealItem key={row.group}>
-              <div className="card-glow group h-full p-6">
-                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-accent-soft">
-                  {row.group}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {row.items.map((item) => (
-                    <Chip key={item}>{item}</Chip>
+        <Capabilities />
+      </Section>
+
+      {/* Featured projects */}
+      <Section className="pt-24">
+        <Reveal>
+          <SectionHeading
+            eyebrow="Selected work"
+            title="Featured Projects"
+            action={
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-1.5 text-sm text-slate-400 transition-colors hover:text-accent"
+              >
+                All projects <ArrowUpRight size={15} />
+              </Link>
+            }
+          />
+        </Reveal>
+
+        <RevealGroup className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          {featuredProjects.map((project, i) => (
+            <RevealItem key={project.slug} className="[perspective:1200px]">
+              <ProjectCard project={project} index={i} />
+            </RevealItem>
+          ))}
+        </RevealGroup>
+      </Section>
+
+      {/* Experience preview */}
+      <Section className="pt-24">
+        <Reveal>
+          <SectionHeading
+            eyebrow="Experience"
+            title="Where I've worked"
+            action={
+              <Link
+                href="/experience"
+                className="inline-flex items-center gap-1.5 text-sm text-slate-400 transition-colors hover:text-accent"
+              >
+                Full timeline <ArrowUpRight size={15} />
+              </Link>
+            }
+          />
+        </Reveal>
+
+        <RevealGroup className="space-y-4">
+          {preview.map((item) => (
+            <RevealItem key={`${item.company}-${item.role}`}>
+              <div className="card-glow group flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                    <h3 className="font-display text-lg font-semibold text-white">
+                      {item.company}
+                    </h3>
+                    {item.kind === "freelance" && (
+                      <span className="rounded-md border border-accent/30 bg-accent/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-accent-soft">
+                        Freelance
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-1 text-sm italic text-accent-soft">{item.role}</p>
+                  <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-slate-500">
+                    <span>{item.period}</span>
+                    <span className="inline-flex items-center gap-1">
+                      <MapPin size={11} strokeWidth={1.8} />
+                      {item.location}
+                    </span>
+                  </p>
+                </div>
+                <div className="flex shrink-0 flex-wrap gap-2 sm:max-w-[18rem] sm:justify-end">
+                  {item.stack.slice(0, 4).map((tech) => (
+                    <Chip key={tech}>{tech}</Chip>
                   ))}
                 </div>
               </div>
             </RevealItem>
           ))}
         </RevealGroup>
+      </Section>
+
+      {/* Toolbox — condensed; the full list is on /about */}
+      <Section className="pt-24">
+        <Reveal>
+          <SectionHeading
+            eyebrow="Toolbox"
+            title="What I build with"
+            action={
+              <Link
+                href="/about"
+                className="inline-flex items-center gap-1.5 text-sm text-slate-400 transition-colors hover:text-accent"
+              >
+                Full skill list <ArrowUpRight size={15} />
+              </Link>
+            }
+          />
+        </Reveal>
+
+        <Reveal>
+          <div className="card-glow group divide-y divide-white/5 p-6 sm:p-7">
+            {coreStack.map((row) => (
+              <div
+                key={row.group}
+                className="flex flex-col gap-3 py-4 first:pt-0 last:pb-0 sm:flex-row sm:gap-6"
+              >
+                <p className="w-full shrink-0 font-mono text-[11px] uppercase tracking-[0.2em] text-accent-soft sm:w-52 sm:pt-1">
+                  {row.group}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {row.items.map((item) => (
+                    <Chip key={item}>{item}</Chip>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Reveal>
       </Section>
 
       {/* Closing CTA */}
@@ -141,14 +164,19 @@ export default function HomePage() {
               className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent"
             />
             <h2 className="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Let&apos;s build something together
+              Have a technical challenge? Let&apos;s build something.
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-slate-400">
-              I&apos;m open to backend and systems engineering roles, and happy to talk about
-              anything involving APIs, databases and making slow things fast.
+              I&apos;m open to software engineering roles, freelance backend work, AI training and
+              evaluation projects, research collaborations and technical fellowships.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button href="/contact">Get in touch</Button>
+              <Button href="/contact">
+                Get in touch <ArrowRight size={16} />
+              </Button>
+              <Button href={site.socials.github} variant="ghost" external>
+                GitHub <ArrowUpRight size={16} />
+              </Button>
               <Button href={site.socials.linkedin} variant="ghost" external>
                 LinkedIn <ArrowUpRight size={16} />
               </Button>
