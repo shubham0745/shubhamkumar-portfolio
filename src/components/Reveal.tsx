@@ -29,14 +29,16 @@ export default function Reveal({
 }) {
   const { x, y } = offset[direction];
 
+  // Opacity + transform only. The previous version also animated
+  // `filter: blur(6px)` -> `blur(0px)`, which forces a filter repaint on every
+  // revealed element and was a visible source of scroll jank.
   const variants: Variants = {
-    hidden: { opacity: 0, x, y, filter: "blur(6px)" },
+    hidden: { opacity: 0, x, y },
     visible: {
       opacity: 1,
       x: 0,
       y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] },
     },
   };
 
@@ -95,13 +97,12 @@ export function RevealItem({
     <motion.div
       className={className}
       variants={{
-        hidden: { opacity: 0, x, y, filter: "blur(6px)" },
+        hidden: { opacity: 0, x, y },
         visible: {
           opacity: 1,
           x: 0,
           y: 0,
-          filter: "blur(0px)",
-          transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+          transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
         },
       }}
     >

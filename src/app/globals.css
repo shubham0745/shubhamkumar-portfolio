@@ -46,8 +46,12 @@ body {
 }
 
 @layer components {
+  /* No backdrop-blur here on purpose. It used to be `backdrop-blur-sm`, which
+     promotes every single card to its own compositing layer and makes the
+     browser re-sample the backdrop behind each one while scrolling. The panel
+     is slightly more opaque instead, which reads the same but costs nothing. */
   .card {
-    @apply relative rounded-2xl border border-white/10 bg-ink-800/60 backdrop-blur-sm;
+    @apply relative rounded-2xl border border-white/10 bg-ink-800/70;
   }
 
   /* Thin gradient hairline that lights up on hover */

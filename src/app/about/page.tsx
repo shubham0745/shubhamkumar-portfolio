@@ -5,7 +5,7 @@ import PageHeader from "@/components/PageHeader";
 import Reveal, { RevealGroup, RevealItem } from "@/components/Reveal";
 import Chip from "@/components/Chip";
 import Button from "@/components/Button";
-import { DevCanvas } from "@/components/three/LazyScene";
+import StackDiagram from "@/components/visuals/StackDiagram";
 import { about, certifications, education, publication, site, skills } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -38,14 +38,10 @@ export default function AboutPage() {
           </Reveal>
         </div>
 
-        {/* 3D element */}
+        {/* Request path through the stack I work in */}
         <Reveal direction="left" className="order-first lg:order-last">
-          <div className="relative h-[22rem] w-full sm:h-[26rem] lg:h-[32rem]">
-            <DevCanvas />
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(4,5,15,0.6)_100%)]"
-            />
+          <div className="relative h-[22rem] w-full sm:h-[26rem] lg:h-[30rem]">
+            <StackDiagram />
           </div>
         </Reveal>
       </div>

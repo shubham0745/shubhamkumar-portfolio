@@ -97,7 +97,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.22, ease: "easeOut" }}
-            className="border-t border-white/[0.07] bg-ink-950/95 backdrop-blur-xl md:hidden"
+            className="border-t border-white/[0.07] bg-ink-950 md:hidden"
           >
             <ul className="mx-auto max-w-7xl px-5 py-4">
               {nav.map((item, i) => (

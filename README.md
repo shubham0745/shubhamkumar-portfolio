@@ -1,8 +1,8 @@
 # Shubham Kumar — Portfolio
 
-Personal site built with **Next.js 14 (App Router) · TypeScript · Tailwind CSS · Framer Motion · React Three Fiber**.
+Personal site built with **Next.js 14 (App Router) · TypeScript · Tailwind CSS · Framer Motion**.
 
-Dark navy shell, blue/violet ambient glow, animated 3D scenes, scroll reveals, fully responsive.
+Dark navy shell, blue/violet ambient glow, a canvas node field behind the hero, scroll reveals, fully responsive.
 
 ---
 
@@ -28,7 +28,6 @@ All copy sits in `src/data/` — you shouldn't need to touch components to updat
 | `src/data/site.ts` | Name, roles for the typing effect, email, socials, resume path, SEO URL, About copy, skills, education, certifications, publication |
 | `src/data/experience.ts` | Job cards (company, role, period, location, bullets, stack) |
 | `src/data/projects.ts` | Project cards — `featured: true` also surfaces it on the home page |
-| `src/data/guides.ts` | Student Guide articles |
 
 Your resume is served from `public/resume.pdf`. Replace that file to update the download link.
 
@@ -39,16 +38,6 @@ Your resume is served from `public/resume.pdf`. Replace that file to update the 
 3. **`src/data/projects.ts`** — holds only the two real projects. The two placeholder entries that shipped with filler copy have been removed, so add real projects in their place. Setting `stub: true` on an entry still renders a small orange **DRAFT** badge if you want to park a work-in-progress.
 4. **Project links** — each project has a `links: { demo, github, paper }` object. Fill them in and the card grows Live / Code / Paper links automatically.
 5. **Project screenshots** (optional) — drop images in `public/projects/` and set `image: "/projects/name.png"` on a project to replace the generated gradient panel.
-
-### Writing a new guide article
-
-Append to the `guides` array in `src/data/guides.ts`. The `body` is an array of blocks:
-
-- `"## Heading"` renders a section heading
-- `"- Bullet text"` renders a bullet
-- anything else renders as a paragraph
-
-Routes are generated statically from the `slug`, so a new entry immediately gets `/student-guide/<slug>`.
 
 ---
 
@@ -84,22 +73,19 @@ src/
 │   ├── layout.tsx            # Shell: fonts, metadata, nav, footer, MotionConfig
 │   ├── page.tsx              # Home
 │   ├── about/ experience/ projects/ contact/
-│   ├── student-guide/        # list page + [slug] article pages
-│   ├── opengraph-image.tsx   # Social preview card, generated at build via next/og
-│   ├── sitemap.ts            # Built from `nav` + `guides`
+│   ├── opengraph-image.tsx   # Social preview card, rendered via next/og
+│   ├── sitemap.ts            # Built from `nav`
 │   ├── robots.ts             # Allows all, points at sitemap.xml
 │   ├── not-found.tsx         # 404
 │   ├── error.tsx             # Runtime error boundary with a retry button
 │   ├── icon.svg              # Favicon
 │   └── globals.css           # Tokens, card/glow utilities, reduced-motion rules
 ├── components/
-│   ├── three/                # React Three Fiber scenes
-│   │   ├── HeroScene.tsx     # Home: distorted core, orbit rings, star field
-│   │   ├── DevScene.tsx      # About: layered stack with travelling packets
-│   │   └── LazyScene.tsx     # Dynamic import wrapper (ssr: false)
+│   ├── visuals/
+│   │   ├── HeroField.tsx     # Home: canvas node field with orbit rings
+│   │   └── StackDiagram.tsx  # About: request path through the backend tiers
 │   ├── Hero.tsx  Navbar.tsx  Footer.tsx  ProjectCard.tsx  ExperienceCard.tsx
 │   ├── TiltCard.tsx          # 3D cursor tilt + spotlight
-│   ├── GuideCard.tsx         # Student Guide row + cursor-tracked spotlight
 │   ├── Reveal.tsx            # Scroll-reveal primitives
 │   └── TypingText.tsx        # Hero typing effect
 └── data/                     # ← all content
@@ -107,10 +93,37 @@ src/
 
 `sitemap.ts` and `robots.ts` both derive their URLs from `site.url`, so they are only correct once step 2 above is done.
 
-### Notes on the 3D
+### Notes on performance
 
-`three.js` is dynamically imported with `ssr: false`, so it stays out of the server bundle and off the critical path — the shared JS bundle is ~87 kB and WebGL streams in after. Scenes lower their particle count and pixel ratio on small screens.
+This site used to render its hero and about visuals with `three.js` via React Three Fiber. That was removed: it was ~45% of the modules on the home route, kept a WebGL context running every frame, and was throwing `R3F: Hooks can only be used within the Canvas component!` at runtime. `HeroField.tsx` reproduces the same look on a 2D canvas in a couple of kilobytes.
+
+If you extend the visuals, keep the four guards that make `HeroField` cheap:
+
+- device pixel ratio capped at 1.5
+- the `requestAnimationFrame` loop only runs while the canvas is on screen (`IntersectionObserver`) and the tab is visible (`visibilitychange`)
+- glow comes from blitting a pre-rendered sprite, never `shadowBlur`
+- `prefers-reduced-motion` paints one static frame and stops
+
+Three other things were deliberately removed for the same reason, so please don't add them back without measuring:
+
+- **large-radius `blur()` on big elements.** The ambient background used four ~40rem divs with `blur-3xl`, two of them opacity-animating forever. A radial gradient is already soft, so the blur cost most of the scroll smoothness and bought nothing.
+- **`backdrop-blur` on cards.** It promotes every card to its own compositing layer. The card panel is simply more opaque now.
+- **animating `filter: blur()` in scroll reveals.** `Reveal` animates opacity and transform only.
 
 Framer's `MotionConfig reducedMotion="user"` is set in the root layout: anyone with "reduce motion" enabled gets content faded in without transform animation, and the CSS in `globals.css` stills the looping ambient animations.
+
+### Notes on security
+
+There is no backend here: no API routes, no middleware, no server actions, no database, no auth, no forms, no file uploads, no cookies, no `localStorage`, and no environment variables. Most of the usual web vulnerability classes are absent by construction rather than defended against.
+
+What is actually configured, in `next.config.mjs`:
+
+- `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy` and `Strict-Transport-Security`
+- `poweredByHeader: false` to drop the Next version disclosure
+- `productionBrowserSourceMaps: false` so original sources are never shipped
+
+**Follow-up worth doing:** there is no `Content-Security-Policy`. A useful one needs per-request nonces in `middleware.ts`, because the App Router injects inline hydration scripts; a CSP with `'unsafe-inline'` would look reassuring while blocking very little.
+
+**Known advisories:** `npm audit` reports issues against the `postcss` copy bundled inside `next` itself. They are build-time CSS tooling issues that require attacker-controlled CSS, and all CSS here is yours. The only fix is upgrading to `next@16`, a breaking major — worth scheduling, not worth rushing.
 
 > One gotcha if you extend `Reveal.tsx`: don't swap a `motion.div` for a plain `div` based on `useReducedMotion()`. The hook returns `false` during SSR, so the element type differs between server and client, hydration fails, and the content stays stuck at `opacity: 0`.

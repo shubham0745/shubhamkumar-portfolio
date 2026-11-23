@@ -10,7 +10,9 @@ export const site = {
   tagline: "Building scalable APIs and data-driven systems",
   location: "Ranchi, Jharkhand, India",
   email: "shubhamkqr7430@gmail.com",
-  phone: "+91 91994 70482",
+  // `phone` was removed: nothing rendered it, so it was personal data sitting
+  // in a repo you intend to make public for no benefit. Your number is on the
+  // resume PDF, which is where someone who needs it will look.
   resumeUrl: "/resume.pdf",
   // Empty string = not configured. Links with an empty href are skipped
   // everywhere (navbar, footer, contact page) rather than rendered broken.
@@ -32,7 +34,6 @@ export const nav = [
   { label: "About", href: "/about" },
   { label: "Experience", href: "/experience" },
   { label: "Projects", href: "/projects" },
-  { label: "Student Guide", href: "/student-guide" },
   { label: "Contact", href: "/contact" },
 ];
 
